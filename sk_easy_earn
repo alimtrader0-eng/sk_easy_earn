@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK EASY EARN</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+:root {
+  --red: #f00000;
+  --dark-red: #bd0000;
+  --light-red: #fff0f0;
+  --white: #ffffff;
+  --text: #242424;
+  --border: #ffd0d0;
+  --bg: #fffafa;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: 85px;
+}
+
+header {
+  background: linear-gradient(135deg, #ff0000, #b80000);
+  color: white;
+  padding: 23px 17px;
+  border-radius: 0 0 24px 24px;
+}
+
+header h2 {
+  font-size: 23px;
+}
+
+header p {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 15px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px #ff000008;
+}
+
+.balance-card {
+  color: white;
+  background: linear-gradient(135deg, #ff0000, #bd0000);
+  border: none;
+}
+
+.balance-card h1 {
+  margin: 12px 0;
+  font-size: 31px;
+}
+
+h3 {
+  margin-bottom: 12px;
+}
+
+p {
+  line-height: 1.5;
+}
+
+button {
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  outline: none;
+  background: white;
+  font-size: 14px;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--red);
+}
+
+label {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.full-btn {
+  width: 100%;
+  margin-top: 7px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.row > * {
+  flex: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat {
+  padding: 14px;
+  background: var(--light-red);
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.stat span {
+  font-size: 12px;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--dark-red);
+  font-size: 19px;
+}
+
+.small {
+  color: #777;
+  font-size: 12px;
+  margin-top: 7px;
+}
+
+.notice {
+  padding: 12px;
+  background: var(--light-red);
+  color: var(--dark-red);
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.task-item {
+  border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.task-item p {
+  font-size: 13px;
+  margin: 7px 0 12px;
+}
+
+.badge {
+  display: inline-block;
+  color: var(--dark-red);
+  background: var(--light-red);
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.profile-top {
+  text-align: center;
+}
+
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--red);
+  background: var(--light-red);
+  margin-bottom: 10px;
+}
+
+.history-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 2px;
+  z-index: 20;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 7px 2px;
+  background: white;
+  color: #666;
+  font-size: 10px;
+  border-radius: 8px;
+}
+
+.nav-btn.active {
+  color: var(--red);
+  background: var(--light-red);
+}
+
+.nav-icon {
+  display: block;
+  font-size: 19px;
+  margin-bottom: 4px;
+}
+
+footer {
+  padding: 15px;
+  text-align: center;
+  font-size: 11px;
+  color: #888;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>🔴 SK EASY EARN</h2>
+  <p>Complete Tasks • Refer Friends • Earn Rewards</p>
+</header>
+
+<div class="container">
+
+  <!-- HOME -->
+  <section id="home" class="page active">
+
+    <div class="card balance-card">
+      <p>💰 TOTAL BALANCE</p>
+      <h1><span id="balance">৳0.00</span></h1>
+      <p>Welcome to SK EASY EARN</p>
+    </div>
+
+    <div class="grid">
+      <div class="stat">
+        <span>📋 TASK INCOME</span>
+        <strong id="homeTaskIncome">৳0.00</strong>
+      </div>
+
+      <div class="stat">
+        <span>👥 REFER INCOME</span>
+        <strong id="homeReferIncome">৳0.00</strong>
+      </div>
+
+      <div class="stat">
+        <span>📊 TOTAL INCOME</span>
+        <strong id="homeTotalIncome">৳0.00</strong>
+      </div>
+
+      <div class="stat">
+        <span>👥 TOTAL REFERS</span>
+        <strong id="homeReferrals">0</strong>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3>📢 ANNOUNCEMENT</h3>
+      <p id="announcement">Welcome to SK EASY EARN!</p>
+    </div>
+
+    <div class="card">
+      <h3>🚀 QUICK MENU</h3>
+      <div class="row">
+        <button onclick="showPage('tasks')">📋 TASKS</button>
+        <button onclick="showPage('refer')">👥 REFER</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- TASK -->
+  <section id="tasks" class="page">
+    <div class="card">
+      <h3>📋 AVAILABLE TASKS</h3>
+      <p class="small">Tasks are loaded from Firebase.</p>
+    </div>
+    <div id="taskList">
+      <div class="card">Loading tasks...</div>
+    </div>
+  </section>
+
+  <!-- REFER -->
+  <section id="refer" class="page">
+    <div class="card">
+      <h3>👥 REFER & EARN</h3>
+
+      <p>Invite friends using your referral link.</p>
+
+      <label>YOUR REFERRAL LINK</label>
+      <input id="referralLink" readonly
+             placeholder="Loading referral link...">
+
+      <button class="full-btn" onclick="copyReferral()">
+        📋 COPY REFERRAL LINK
+      </button>
+
+      <button class="full-btn" onclick="shareReferral()">
+        📤 SHARE TELEGRAM
+      </button>
+
+      <div class="notice" style="margin-top:12px">
+        Referral income is displayed from verified Firebase records.
+      </div>
+
+      <div class="grid">
+        <div class="stat">
+          <span>👥 REFERRALS</span>
+          <strong id="referCount">0</strong>
+        </div>
+        <div class="stat">
+          <span>💰 REFER INCOME</span>
+          <strong id="referIncome">৳0.00</strong>
+        </div>
+      </div>
+
+      <p class="small" id="referStatus">
+        Waiting for Firebase settings...
+      </p>
+    </div>
+  </section>
+
+  <!-- WALLET -->
+  <section id="wallet" class="page">
+
+    <div class="card">
+      <h3>💰 MY WALLET</h3>
+      <p>Available Balance</p>
+      <h1 id="walletBalance" style="color:red;margin:12px 0">
+        ৳0.00
+      </h1>
+    </div>
+
+    <div class="card">
+      <h3>💳 DEPOSIT REQUEST</h3>
+
+      <label>Payment Method</label>
+      <select id="depositMethod">
+        <option value="bKash">bKash</option>
+        <option value="Nagad">Nagad</option>
+        <option value="Rocket">Rocket</option>
+      </select>
+
+      <div class="notice">
+        Payment instructions:
+        <div id="depositInstructions">Loading payment settings...</div>
+      </div>
+
+      <label>Deposit Amount (BDT)</label>
+      <input id="depositAmount" type="number"
+             min="1" placeholder="Enter amount">
+
+      <label>Transaction ID</label>
+      <input id="depositTrxId" placeholder="Enter transaction ID">
+
+      <button class="full-btn" onclick="submitDeposit()">
+        SUBMIT DEPOSIT REQUEST
+      </button>
+
+      <p class="small">
+        Request submission requires a secure backend.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>💸 WITHDRAW REQUEST</h3>
+
+      <label>Payment Method</label>
+      <select id="withdrawMethod">
+        <option value="bKash">bKash</option>
+        <option value="Nagad">Nagad</option>
+        <option value="Rocket">Rocket</option>
+      </select>
+
+      <label>Account Number</label>
+      <input id="withdrawNumber" placeholder="Enter account number">
+
+      <label>Withdraw Amount (BDT)</label>
+      <input id="withdrawAmount" type="number"
+             min="1" placeholder="Enter amount">
+
+      <button class="full-btn" onclick="submitWithdraw()">
+        SUBMIT WITHDRAW REQUEST
+      </button>
+
+      <p class="small">
+        Submitting a request does not itself transfer money.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>📜 TRANSACTION HISTORY</h3>
+      <div id="historyList">Loading history...</div>
+    </div>
+
+  </section>
+
+  <!-- PROFILE -->
+  <section id="profile" class="page">
+
+    <div class="card profile-top">
+      <img
+        id="telegramPhoto"
+        class="profile-photo"
+        src="https://placehold.co/100x100/ffe5e5/c90000?text=USER"
+        alt="Telegram Photo">
+
+      <h2 id="telegramName">Telegram User</h2>
+      <p class="small">SK EASY EARN MEMBER</p>
+    </div>
+
+    <div class="card">
+      <h3>👤 TELEGRAM PROFILE</h3>
+
+      <label>🆔 TELEGRAM ID</label>
+      <input id="telegramId" readonly
+             placeholder="Open this app through Telegram">
+
+      <label>👤 TELEGRAM NAME</label>
+      <input id="telegramNameInput" readonly
+             placeholder="Telegram name">
+
+      <label>🔗 REFERRAL CODE</label>
+      <input id="userCode" readonly>
+    </div>
+
+    <div class="card">
+      <h3>💰 INCOME DETAILS</h3>
+
+      <div class="grid">
+        <div class="stat">
+          <span>💵 TOTAL INCOME</span>
+          <strong id="totalIncome">৳0.00</strong>
+        </div>
+
+        <div class="stat">
+          <span>👥 REFER INCOME</span>
+          <strong id="profileReferIncome">৳0.00</strong>
+        </div>
+
+        <div class="stat">
+          <span>📋 TASK INCOME</span>
+          <strong id="taskIncome">৳0.00</strong>
+        </div>
+
+        <div class="stat">
+          <span>💰 BALANCE</span>
+          <strong id="profileBalance">৳0.00</strong>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<footer>SK EASY EARN • User Panel</footer>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-page="home"
+          onclick="showPage('home')">
+    <span class="nav-icon">🏠</span>HOME
+  </button>
+
+  <button class="nav-btn" data-page="tasks"
+          onclick="showPage('tasks')">
+    <span class="nav-icon">📋</span>TASK
+  </button>
+
+  <button class="nav-btn" data-page="refer"
+          onclick="showPage('refer')">
+    <span class="nav-icon">👥</span>REFER
+  </button>
+
+  <button class="nav-btn" data-page="wallet"
+          onclick="showPage('wallet')">
+    <span class="nav-icon">💰</span>WALLET
+  </button>
+
+  <button class="nav-btn" data-page="profile"
+          onclick="showPage('profile')">
+    <span class="nav-icon">👤</span>PROFILE
+  </button>
+</nav>
+
+<script type="module">
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+/*
+  Replace these example values with your Firebase Web App config.
+*/
+const firebaseConfig = {
+  apiKey: "YOUR_FIREBASE_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.firebasestorage.app",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_FIREBASE_APP_ID"
+};
+
+const FALLBACK_BOT_USERNAME = "YOUR_BOT_USERNAME";
+
+const tg = window.Telegram?.WebApp;
+tg?.ready();
+
+const telegramUser = tg?.initDataUnsafe?.user || null;
+
+const state = {
+  uid: telegramUser ? String(telegramUser.id) : "",
+  botUsername: FALLBACK_BOT_USERNAME,
+  referralBonus: 0,
+  balance: 0,
+  totalIncome: 0,
+  referIncome: 0,
+  taskIncome: 0,
+  referrals: 0,
+  tasks: {},
+  history: {},
+  settingsLoaded: false
+};
+
+function money(value) {
+  const amount = Number(value);
+  return "৳" + (Number.isFinite(amount) ? amount : 0).toFixed(2);
+}
+
+function safeText(value) {
+  return String(value ?? "");
+}
+
+function validUsername(value) {
+  return safeText(value)
+    .trim()
+    .replace(/^@/, "")
+    .replace(/^https?:\/\/t\.me\//i, "")
+    .replace(/\/.*$/, "");
+}
+
+function renderProfile() {
+  if (telegramUser) {
+    const name = [
+      telegramUser.first_name,
+      telegramUser.last_name
+    ].filter(Boolean).join(" ");
+
+    document.getElementById("telegramId").value =
+      String(telegramUser.id);
+
+    document.getElementById("telegramName").textContent =
+      name || "Telegram User";
+
+    document.getElementById("telegramNameInput").value =
+      name || "";
+
+    if (telegramUser.photo_url) {
+      document.getElementById("telegramPhoto").src =
+        telegramUser.photo_url;
+    }
+  } else {
+    document.getElementById("telegramId").value =
+      "Open via Telegram";
+
+    document.getElementById("telegramName").textContent =
+      "Open via Telegram";
+
+    document.getElementById("telegramNameInput").value =
+      "Open via Telegram";
+  }
+
+  document.getElementById("userCode").value =
+    state.uid || "Telegram Mini App required";
+
+  document.getElementById("balance").textContent =
+    money(state.balance);
+
+  document.getElementById("walletBalance").textContent =
+    money(state.balance);
+
+  document.getElementById("profileBalance").textContent =
+    money(state.balance);
+
+  document.getElementById("totalIncome").textContent =
+    money(state.totalIncome);
+
+  document.getElementById("homeTotalIncome").textContent =
+    money(state.totalIncome);
+
+  document.getElementById("referIncome").textContent =
+    money(state.referIncome);
+
+  document.getElementById("profileReferIncome").textContent =
+    money(state.referIncome);
+
+  document.getElementById("homeReferIncome").textContent =
+    money(state.referIncome);
+
+  document.getElementById("taskIncome").textContent =
+    money(state.taskIncome);
+
+  document.getElementById("homeTaskIncome").textContent =
+    money(state.taskIncome);
+
+  document.getElementById("referCount").textContent =
+    String(state.referrals);
+
+  document.getElementById("homeReferrals").textContent =
+    String(state.referrals);
+
+  const username = validUsername(state.botUsername);
+  const link = username && username !== "YOUR_BOT_USERNAME" && state.uid
+    ? `https://t.me/${username}?start=${encodeURIComponent(state.uid)}`
+    : "";
+
+  document.getElementById("referralLink").value = link;
+
+  document.getElementById("referStatus").textContent = link
+    ? "Referral link loaded."
+    : "Configure the bot username and open the app through Telegram.";
+}
+
+function showMessage(message) {
+  alert(message);
+}
+
+window.showPage = function(page) {
+  document.querySelectorAll(".page").forEach(section => {
+    section.classList.toggle("active", section.id === page);
+  });
+
+  document.querySelectorAll(".nav-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.page === page);
+  });
+
+  window.scrollTo(0, 0);
+};
+
+window.copyReferral = async function() {
+  const input = document.getElementById("referralLink");
+
+  if (!input.value) {
+    showMessage("Referral link is not available.");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(input.value);
+    showMessage("Referral link copied.");
+  } catch {
+    input.select();
+    showMessage("Select and copy your referral link.");
+  }
+};
+
+window.shareReferral = function() {
+  const link = document.getElementById("referralLink").value;
+
+  if (!link) {
+    showMessage("Referral link is not available.");
+    return;
+  }
+
+  const shareUrl = "https://t.me/share/url?url=" +
+    encodeURIComponent(link);
+
+  window.open(shareUrl, "_blank");
+};
+
+/*
+  Deposit and withdrawal must be submitted to a secure backend.
+  These handlers deliberately do not alter balances or pretend to
+  submit a real request.
+*/
+window.submitDeposit = function() {
+  if (!state.uid) {
+    showMessage("Open the app through your Telegram Mini App.");
+    return;
+  }
+
+  showMessage(
+    "Deposit submission is not enabled yet. A secure backend is required."
+  );
+};
+
+window.submitWithdraw = function() {
+  if (!state.uid) {
+    showMessage("Open the app through your Telegram Mini App.");
+    return;
+  }
+
+  showMessage(
+    "Withdrawal submission is not enabled yet. A secure backend is required."
+  );
+};
+
+function renderTasks(tasks) {
+  const container = document.getElementById("taskList");
+  const entries = Object.entries(tasks || {});
+
+  if (!entries.length) {
+    container.innerHTML =
+      '<div class="card">No tasks available right now.</div>';
+    return;
+  }
+
+  container.innerHTML = "";
+
+  entries.forEach(([id, task]) => {
+    const card = document.createElement("div");
+    card.className = "card task-item";
+
+    const title = document.createElement("h3");
+    title.textContent = safeText(task.title || "Task");
+
+    const description = document.createElement("p");
+    description.textContent = safeText(task.description || "");
+
+    const reward = document.createElement("span");
+    reward.className = "badge";
+    reward.textContent = "Reward: " + money(task.reward || 0);
+
+    card.append(title, description, reward);
+
+    const button = document.createElement("button");
+    button.className = "full-btn";
+    button.textContent = "OPEN TASK";
+
+    button.onclick = () => {
+      if (task.url) {
+        const url = String(task.url);
+
+        if (/^https:\/\/(t\.me|telegram\.me)\//i.test(url)) {
+          tg?.openTelegramLink
+            ? tg.openTelegramLink(url)
+            : window.open(url, "_blank");
+        } else if (/^https:\/\//i.test(url)) {
+          tg?.openLink
+            ? tg.openLink(url)
+            : window.open(url, "_blank");
+        } else {
+          showMessage("Invalid task URL.");
+        }
+      } else {
+        showMessage("Task URL has not been configured.");
+      }
+    };
+
+    card.appendChild(button);
+    container.appendChild(card);
+  });
+}
+
+function renderHistory(history) {
+  const container = document.getElementById("historyList");
+  const entries = Object.values(history || {});
+
+  if (!entries.length) {
+    container.textContent = "No transaction history available.";
+    return;
+  }
+
+  container.replaceChildren();
+
+  entries.reverse().forEach(item => {
+    const row = document.createElement("div");
+    row.className = "history-item";
+
+    const title = document.createElement("div");
+    title.textContent = safeText(item.title || item.type || "Transaction");
+
+    const status = document.createElement("div");
+    status.className = "small";
+    status.textContent = "Status: " + safeText(item.status || "Pending");
+
+    row.append(title, status);
+    container.appendChild(row);
+  });
+}
+
+function connectFirebase() {
+  if (
+    firebaseConfig.apiKey === "YOUR_FIREBASE_API_KEY" ||
+    firebaseConfig.databaseURL.includes("YOUR_PROJECT")
+  ) {
+    document.getElementById("referStatus").textContent =
+      "Add your Firebase Web App config to connect the database.";
+    renderProfile();
+    renderTasks({});
+    renderHistory({});
+    return;
+  }
+
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Public application settings, such as bot username and announcements.
+    onValue(ref(db, "settings"), snapshot => {
+      const settings = snapshot.val() || {};
+
+      if (settings.botUsername) {
+        state.botUsername = validUsername(settings.botUsername);
+      }
+
+      if (settings.referralBonus !== undefined) {
+        state.referralBonus = Number(settings.referralBonus) || 0;
+      }
+
+      document.getElementById("announcement").textContent =
+        safeText(settings.announcement || "Welcome to SK EASY EARN!");
+
+      document.getElementById("depositInstructions").textContent =
+        safeText(settings.depositInstructions ||
+          "Contact support for payment instructions.");
+
+      renderProfile();
+    }, error => {
+      console.error("Settings error:", error);
+    });
+
+    // Tasks are public to read; protect write access with database rules.
+    onValue(ref(db, "tasks"), snapshot => {
+      renderTasks(snapshot.val() || {});
+    }, error => {
+      console.error("Tasks error:", error);
+      renderTasks({});
+    });
+
+    /*
+      Do not trust initDataUnsafe as proof of identity on the server.
+      Private user records must be protected by authenticated backend
+      verification of Telegram Web App initData.
+    */
+    if (state.uid) {
+      onValue(ref(db, "publicUserSummaries/" + state.uid), snapshot => {
+        const user = snapshot.val() || {};
+
+        state.balance = Number(user.balance) || 0;
+        state.totalIncome = Number(user.totalIncome) || 0;
+        state.referIncome = Number(user.referIncome) || 0;
+        state.taskIncome = Number(user.taskIncome) || 0;
+        state.referrals = Number(user.referrals) || 0;
+
+        renderProfile();
+      }, error => {
+        console.error("User summary error:", error);
+      });
+
+      onValue(ref(db, "publicTransactionSummaries/" + state.uid), snapshot => {
+        renderHistory(snapshot.val() || {});
+      }, error => {
+        console.error("History error:", error);
+        renderHistory({});
+      });
+    } else {
+      document.getElementById("referStatus").textContent =
+        "Open this page through your Telegram Mini App to load your profile.";
+      renderHistory({});
+    }
+
+  } catch (error) {
+    console.error("Firebase initialization error:", error);
+
+    document.getElementById("referStatus").textContent =
+      "Could not connect to Firebase. Check the Firebase configuration.";
+  }
+}
+
+renderProfile();
+connectFirebase();
+</script>
+
+</body>
+</html>
